@@ -1,27 +1,18 @@
-# Video Walkthrough
-A video of this server's setup, API, and demo can be found here:
-[https://youtu.be/obTH3NV1uCQ](https://www.youtube.com/watch?v=zPJRuXdqumI)
+# ER Diagrams 
+Current version: https://erdplus.com/edit-diagram/82ca8274-8cab-4829-8dd3-a8ab87ccf3a0
+Original version (20+ tables): https://erdplus.com/edit-diagram/0ccc27b8-3521-406c-8933-bfe7e38f2891 
 
-If the above doesn't work, try:
-[clipchamp link](https://clipchamp.com/watch/qr2xwsUvxUq)
+# Schema
+https://dbdiagram.io/d/COMP-3005-F23-FP-6564e8f73be1495787d56ebe (can't edit without manually requesting. email is required)
+
+# Documentation
+https://www.overleaf.com/8282345138vzfrpmjxfcpn#479089 
+
+# Video Walkthrough
+Insert video here
 
 # Summary
-This is a server that listens to the localhost at port 1337. It provides the following API:
-
-GET /student  -> retrieves all students
-
-POST /student -> uses a request body to add a student to the DB. Req body must have the following schema:
-
-    first_name: String,
-    last_name: String, 
-    email: String,
-    enrollment_date: String
-    
-PUT /student?id&email -> Find student with `id`, then update the student email to `email`
-
-DELETE /student/:id   -> Delete student with matching `id`
-
-I've gone with a server-based approach in this assignment because that's how I plan to do the final project. 
+Explain API here
 
 # Pre-Reqs
 You need to have the following tools/packages installed to be able to run this server:
@@ -44,27 +35,7 @@ You need to have the following tools/packages installed to be able to run this s
 
 # Running the server
 - Run `npm run dev`
-- Now, the server should be listning on port 1337. Use tools like Postman or Thunder Client to easily make the requests.
+- Now, the server should be listening on port 1337. Use tools like Postman or Thunder Client to easily make the requests.
 
 # Function Explanations
-`application.get("/student", async (req: Request, res: Response)` &rarr; Retrieves all students in the DB <br>
-`application.post("/student", async(req: Request, res: Response)` &rarr; Uses the post request body* to add a student to the DB. <br>
-`application.put("/student", async (req: Request, res: Response)` &rarr; Uses the put request URL params** to add edit a student's email. <br>
-`application.delete("/student/:student_id", async (req: Request, res: Response)` &rarr; Deletes the student whose ID matches the one provided in the route. 
-<br>
-<br>
-
-\* The request body needs to be of the following schema:
-```
-first_name: String,
-last_name: String, 
-email: String,
-enrollment_date: String
-```
-<br>
-
-\** The url params need to be of the following schema:
-```
-id: String,
-email: String
-```
+Explain functions here 
