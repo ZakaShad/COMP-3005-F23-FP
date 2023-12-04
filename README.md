@@ -4,7 +4,7 @@ Current version: https://erdplus.com/edit-diagram/82ca8274-8cab-4829-8dd3-a8ab87
 Original version (20+ tables): https://erdplus.com/edit-diagram/0ccc27b8-3521-406c-8933-bfe7e38f2891 
 
 # Schema
-https://dbdiagram.io/d/COMP-3005-F23-FP-6564e8f73be1495787d56ebe (can't edit without manually requesting. email is required)
+[https://dbdiagram.io/d/COMP-3005-F23-FP-6564e8f73be1495787d56ebe (can't edit without manually requesting. email is required)](https://dbdiagram.io/d/3005-FP-656c0a3956d8064ca0445d3c)
 
 # Documentation
 https://www.overleaf.com/8282345138vzfrpmjxfcpn#479089 
