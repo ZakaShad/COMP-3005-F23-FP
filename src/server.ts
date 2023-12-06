@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 application.use(bodyParser.json());
 const PORT = 1337;
 
+//TODO: This needs to be a cloud server
 const pool = new Pool({
   user: process.env.DB_USER, //postgres by default
   password: process.env.DB_PASS,
@@ -16,6 +17,9 @@ const pool = new Pool({
   database: process.env.DB_NAME //A4 for me
 });
 
+
+
+/*
 // Retrieves all students
 application.get("/student", async (req: Request, res: Response) => {
     try {
@@ -140,3 +144,4 @@ application.delete("/student/:student_id", async (req: Request, res: Response) =
 application.listen(PORT, () => {
     console.log(`server running on port ${PORT}...`);
 })
+*/
