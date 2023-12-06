@@ -144,4 +144,8 @@ application.delete("/student/:student_id", async (req: Request, res: Response) =
 application.listen(PORT, () => {
     console.log(`server running on port ${PORT}...`);
 })
-*/
+*/ 
+application.listen(PORT, () => {
+    console.log(`server running on port ${PORT}...`); 
+
+})
