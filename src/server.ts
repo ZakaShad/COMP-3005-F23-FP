@@ -3,10 +3,12 @@ import { Pool } from 'pg';
 import { isNumeric } from './helpers';
 import { PostReqBody, PutReqQuery } from './helpers';
 
-const application = express();
+const app = express();
 const bodyParser = require('body-parser');
-application.use(bodyParser.json());
-const PORT = 1337;
+const { auth } = require('express-openid-connect');
+const { requiresAuth } = require('express-openid-connect');
+const PORT = 3000;
+
 
 //TODO: This needs to be a cloud server
 const pool = new Pool({
@@ -17,7 +19,49 @@ const pool = new Pool({
   database: process.env.DB_NAME //A4 for me
 });
 
+const authConfig = {
+    authRequired: false,
+    auth0Logout: true,
+    secret: 'cb84ebb8dc8875c545009fa1ea4ba3011adceeb23a320a8e69892515549244e6',
+    baseURL: 'http://localhost:3000/',
+    clientID: 'rWLvIA4RdMcAS7Ua2F1jtyTGyWSdVgtX',
+    issuerBaseURL: 'https://dev-l8qnenubc7x1j6bb.us.auth0.com'
+}
 
+// Init middleware
+app.use(auth(authConfig));
+app.use(bodyParser.json());
+// TODO: Add custom middleware 
+
+
+app.get('/', (req, res) => {
+    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
+
+app.get('/member', requiresAuth(), (req, res) => {
+    res.send(JSON.stringify(req.oidc.user));
+});
+
+app.post('/user', (req, res) => {
+    console.log("ASDFASDFASD");
+    console.log(req.body);
+    res.send("ok");
+})
+
+app.get('/ping', (req, res) => {
+    console.log("PING");
+    res.send("ok");
+})
+
+app.get('/login', (req, res) => {
+    console.log("ASDFADFASDF");
+    res.send("ok");
+})
+
+// app.get('/login', (req, res) => {
+//     console.log(req.body);
+//     res.send("ok");
+// })
 
 /*
 // Retrieves all students
@@ -140,8 +184,8 @@ application.delete("/student/:student_id", async (req: Request, res: Response) =
     }
 
 })
+*/
 
-application.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`server running on port ${PORT}...`);
 })
-*/
