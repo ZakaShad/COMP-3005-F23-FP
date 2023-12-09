@@ -4,7 +4,7 @@
 # Schema
 ![FP v2](https://github.com/ZakaShad/COMP-3005-F23-FP/assets/72482337/4fa4b041-0f11-4a10-853b-17a4649b7441)
 
-
+(Update to/from)
 [Here's the link to the dbdiagram.io schema](https://dbdiagram.io/d/FP-v2-656d2a9356d8064ca04cef20)
 
 # Documentation
