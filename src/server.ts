@@ -1,23 +1,29 @@
 import express, {Request, Response} from 'express';
-import { Pool } from 'pg';
-import { isNumeric } from './helpers';
+import { userInDb } from './helpers';
 import { PostReqBody, PutReqQuery } from './helpers';
+import DB from './global-data';
 
 const app = express();
 const bodyParser = require('body-parser');
-const { auth } = require('express-openid-connect');
-const { requiresAuth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect');
+const path = require('path');
+const validateUser = require('./custom-middleware');
 const PORT = 3000;
 
+console.log(process.env.DB_USER);
+console.log(process.env.DB_PASS);
+console.log(process.env.DB_NAME);
+
+// import DB from './global-data';
+// async function test(){
+//     const query = `SELECT email FROM Users WHERE email='asdfasdfasdf' LIMIT 1;`
+//     const result = await DB.query(query).then();
+//     console.log(result.rows);
+// }
+
+// test();
 
 //TODO: This needs to be a cloud server
-const pool = new Pool({
-  user: process.env.DB_USER, //postgres by default
-  password: process.env.DB_PASS,
-  host: 'localhost',
-  port: 5432, // default Postgres port
-  database: process.env.DB_NAME //A4 for me
-});
 
 const authConfig = {
     authRequired: false,
@@ -31,7 +37,10 @@ const authConfig = {
 // Init middleware
 app.use(auth(authConfig));
 app.use(bodyParser.json());
-// TODO: Add custom middleware 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(validateUser);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 
 app.get('/', (req, res) => {
@@ -42,20 +51,38 @@ app.get('/member', requiresAuth(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user));
 });
 
-app.post('/user', (req, res) => {
-    console.log("ASDFASDFASD");
-    console.log(req.body);
-    res.send("ok");
+app.get('/register', requiresAuth(), (req, res) => {
+    if(userInDb(req.oidc.isAuthenticated())){
+        res.send("you're already registered!");
+        return;
+    }
+    res.render('register');
 })
 
-app.get('/ping', (req, res) => {
-    console.log("PING");
-    res.send("ok");
-})
+app.post('/register', async(req, res) => {
+    const username = req.oidc.user.email;
+    const passwd = '...';
+    const email = req.oidc.user.email;
+    const rDate = '2023-01-01 00:00:00';
+    const fname = req.body.firstName;
+    const lname = req.body.lastName;
+    const dob = req.body.dob;
+    
+    const query = `
+    INSERT INTO Users
+    VALUES ('${username}', '${passwd}', '${email}', '${rDate}', '${fname}', '${lname}', '${dob}' );
+    `
+    
+    try{
+        const result = await DB.query(query);
+        res.redirect("/");
+    } catch(err){
+        if(err.code === 23505){
+            res.send("Seems like you've already registered.");
+            return;
+        }
+    }
 
-app.get('/login', (req, res) => {
-    console.log("ASDFADFASDF");
-    res.send("ok");
 })
 
 // app.get('/login', (req, res) => {

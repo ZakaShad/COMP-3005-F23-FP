@@ -1,0 +1,40 @@
+doctype html
+html
+  head
+    title User Registration Form
+    script(src="https://code.jquery.com/jquery-3.6.4.min.js") // Include jQuery
+  body
+    h1 User Registration Form
+
+    form(action="/register", method="post")
+      label(for="firstName") First Name:
+      input(type="text", id="firstName", name="firstName", value="test", required)
+
+      label(for="lastName") Last Name:
+      input(type="text", id="lastName", name="lastName", required)
+
+      label(for="dob") Date of Birth:
+      input(type="date", id="dob", name="dob", required)
+
+      label(for="userType") User Type:
+      select(id="userType", name="userType", required)
+        option(value="member") Member
+        option(value="trainer") Trainer
+        option(value="admin") Admin
+
+      // Conditional rendering of Staff ID field
+      script.
+        $('#userType').change(function() {
+          if ($(this).val() === 'trainer' || $(this).val() === 'admin') {
+            $('#staffIDContainer').show();
+          } else {
+            $('#staffIDContainer').hide();
+          }
+        });
+
+      // Additional Staff ID field (conditionally rendered)
+      div#staffIDContainer(style="display: none;")
+        label(for="staffID") Staff ID:
+        input(type="text", id="staffID", name="staffID")
+
+      input(type="submit", value="Submit")
