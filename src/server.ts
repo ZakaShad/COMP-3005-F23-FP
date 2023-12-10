@@ -47,11 +47,25 @@ app.use('/session',routSession);
 app.use('/staff',routStaff); 
 app.use('/train',routTrain); 
 
-// Essential routes here 
-app.get('/', (req, res) => {
-    // res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-    res.redirect(`/user/${req.oidc.user.email}`);
+app.get('/', async (req, res) => {
+    const email = req.oidc.user.email;
+    const query = `SELECT u_type FROM Users WHERE username = '${email}'`
+    
+    try{
+        const result = await DB.query(query);
+        const userType = result.rows[0].u_type;
+        res.redirect(`/${userType}/${email}`);
+    }catch(err){
+        console.log(err);
+        res.send("internal server error");
+        return;
+    }
+    
+    // console.log(`/${userType}/${email}`);
+    // res.send(`/${userType}/${email}`);
+    // res.send('nice');
 });
+
 
 app.get('/register', requiresAuth(), async(req, res) => {
     if(await userInDb(req.oidc.user.email)){
@@ -65,14 +79,14 @@ app.post('/register', async(req, res) => {
     const username = req.oidc.user.email;
     const passwd = '...';
     const email = req.oidc.user.email;
-    const rDate = '2023-01-01 00:00:00';
     const fname = req.body.firstName;
     const lname = req.body.lastName;
     const dob = req.body.dob;
+    const userType = req.body.userType;
     
     const usersQuery = `
     INSERT INTO Users
-    VALUES ('${username}', '${passwd}', '${email}', '${rDate}', '${fname}', '${lname}', '${dob}' );
+    VALUES ('${username}', '${passwd}', '${email}', '${dob}', '${fname}', '${lname}', '${dob}', '${userType}' );
     `
 
     var subQuery;
@@ -100,7 +114,7 @@ app.post('/register', async(req, res) => {
         // TODO: verify staffId here
 
         subQuery = `
-        INSERT INTO Admin_Staff
+        INSERT INTO Admin
         VALUES ('${req.oidc.user.email}')
         `
     }
