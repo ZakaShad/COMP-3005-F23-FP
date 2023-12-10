@@ -1,4 +1,5 @@
-import { String, Record} from 'runtypes';
+import { String, Record } from 'runtypes';
+import DB from './global-data';
 
 export const PostReqBody = Record({
     first_name: String,
@@ -15,4 +16,13 @@ export const PutReqQuery = Record({
 // Returns true if input string contains only numeric characters
 export const isNumeric = (val: string) : boolean => {
     return !isNaN(Number(val));
+}
+
+export const userInDb = async(email: string) => {
+    const query = `SELECT email FROM Users WHERE email='${email}' LIMIT 1;`
+    const result = await DB.query(query);
+    if(result.rows.length > 0){
+        return true;
+    }
+    return false;
 }
