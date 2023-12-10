@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title User Profile
+  body
+    h1 #{username}
+
+    h3 Profile
+    ul
+      li Height: #{height}
+      li Weight: #{weight}
+      li Resting Heart Rate (RHR): #{rhr}
+      li Max Heart Rate (MHR): #{mhr}
+      li Desired Weight: #{desired_weight}
+      li Membership Level: #{membership_level}
+      li Loyalty Points: #{loyalty_points}
+
+    h3 Routines
+    ul
+        each routine in routines 
+            li #{routine}
+    
+    h3 Schedule 
+
+
+    button(type="button", onclick="window.location.href = '/whee'") Edit Profile
+    button(type="button", onclick="window.location.href = '/whee'") Edit Routine
+    button(type="button", onclick="window.location.href = '/whee'") View/Edit Workouts Performed
+    button(type="button", onclick="window.location.href = '/whee'") View/Edit PRs
+    button(type="button", onclick=`window.location.href = '/session/${username}'`) Schedule Training Session 
+    //- button(type="button", onclick="window.location.href = '/whee'") Schedule Training Session 

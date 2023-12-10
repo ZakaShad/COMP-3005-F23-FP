@@ -21,7 +21,7 @@ const PORT = 3000;
 
 // Required config for Auth0
 const authConfig = {
-    authRequired: false,
+    authRequired: true,
     auth0Logout: true,
     secret: 'cb84ebb8dc8875c545009fa1ea4ba3011adceeb23a320a8e69892515549244e6',
     baseURL: 'http://localhost:3000/',
@@ -47,14 +47,22 @@ app.use('/session',routSession);
 app.use('/staff',routStaff); 
 app.use('/train',routTrain); 
 
-// Essential routes here 
-app.get('/', async(req, res) => {
-    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+
+app.get('/', async (req, res) => {
+    const email = req.oidc.user.email;
+    const query = `SELECT u_type FROM Users WHERE username = '${email}'`
+    
+    try{
+        const result = await DB.query(query);
+        const userType = result.rows[0].u_type;
+        res.redirect(`/${userType}/${email}`);
+    }catch(err){
+        console.log(err);
+        res.send("internal server error");
+        return;
+    }
 });
 
-// app.get('/member', requiresAuth(), (req, res) => {
-//     res.send(JSON.stringify(req.oidc.user));
-// });
 
 app.get('/register', requiresAuth(), async(req, res) => {
     if(await userInDb(req.oidc.user.email)){
@@ -68,26 +76,58 @@ app.post('/register', async(req, res) => {
     const username = req.oidc.user.email;
     const passwd = '...';
     const email = req.oidc.user.email;
-    const rDate = '2023-01-01 00:00:00';
     const fname = req.body.firstName;
     const lname = req.body.lastName;
     const dob = req.body.dob;
+    const userType = req.body.userType;
     
-    const query = `
+    const usersQuery = `
     INSERT INTO Users
-    VALUES ('${username}', '${passwd}', '${email}', '${rDate}', '${fname}', '${lname}', '${dob}' );
+    VALUES ('${username}', '${passwd}', '${email}', '${dob}', '${fname}', '${lname}', '${dob}', '${userType}' );
     `
+
+    var subQuery;
+    if(req.body.userType === 'member'){
+        const {height, weight, RHR, MHR, desiredWeight} = req.body;
+
+        subQuery = `
+        INSERT INTO Member
+        VALUES ('${username}', ${height}, ${weight}, ${RHR}, ${MHR}, ${desiredWeight}, 'Bronze', 10);
+        `
+    }
+
+    if(req.body.userType === 'trainer'){
+        const staffId = req.body.staffId;
+        // TODO: verify staffId here
+
+        subQuery = `
+        INSERT INTO Trainer
+        VALUES ('${req.oidc.user.email}')
+        `
+    }
+
+    if(req.body.userType === 'admin'){
+        const staffId = req.body.staffId;
+        // TODO: verify staffId here
+
+        subQuery = `
+        INSERT INTO Admin
+        VALUES ('${req.oidc.user.email}')
+        `
+    }
     
     try{
-        const result = await DB.query(query);
-        res.redirect("/");
+        const query = usersQuery + subQuery;
+        await DB.query(query);
     } catch(err){
         if(err.code === 23505){
+            console.log("detected duplicated registration");
             res.send("Seems like you've already registered.");
             return;
         }
     }
 
+    res.redirect("/");
 })
 
 app.listen(PORT, () => {

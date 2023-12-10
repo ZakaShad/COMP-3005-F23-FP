@@ -17,7 +17,6 @@ const validateUser = async(req, res, next ) => {
 
     // Skip if req.path is in excludedRoutes
     if (excludedRoutes.includes(req.path)) {
-        console.log("detected exluded route. Continuing chain")
         next();
         return;
     }
@@ -33,7 +32,6 @@ const validateUser = async(req, res, next ) => {
 
     // If the user exists in DB, move on
     if(await userInDb(email)){
-        console.log("User exists in DB. Moving on")
         next();
         return;
     }
