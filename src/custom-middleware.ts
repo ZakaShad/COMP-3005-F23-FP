@@ -1,4 +1,4 @@
-import DB from './global-data';
+import DB from './DB';
 import { userInDb } from './helpers';
 
 /*

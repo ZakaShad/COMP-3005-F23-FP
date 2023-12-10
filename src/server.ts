@@ -1,7 +1,7 @@
 import express, {Request, Response} from 'express';
 import { userInDb } from './helpers';
 import { PostReqBody, PutReqQuery } from './helpers';
-import DB from './global-data';
+import DB from './DB';
 
 import eventRouter from './routes/event';  
 import exerRouter from './routes/exercise';
@@ -48,7 +48,7 @@ app.use('/staff',routStaff);
 app.use('/train',routTrain); 
 
 // Essential routes here 
-app.get('/', (req, res) => {
+app.get('/', async(req, res) => {
     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
