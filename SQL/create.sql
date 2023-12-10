@@ -63,7 +63,9 @@ CREATE TABLE Workout_Routine (
 
 CREATE TABLE Training_Session (
   training_session_id NUMERIC PRIMARY KEY,
-  training_notes VARCHAR(255)
+  training_notes VARCHAR(255), 
+  startDate timestamp ,
+  endDate timestamp
 );
 
 CREATE TABLE Trained (

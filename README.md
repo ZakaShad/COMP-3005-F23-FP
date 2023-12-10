@@ -1,10 +1,11 @@
-# ER Diagrams 
-Current version: https://erdplus.com/edit-diagram/82ca8274-8cab-4829-8dd3-a8ab87ccf3a0
-
-Original version (20+ tables): https://erdplus.com/edit-diagram/0ccc27b8-3521-406c-8933-bfe7e38f2891 
+# ER Diagram
+![FP ERD](https://github.com/ZakaShad/COMP-3005-F23-FP/assets/72482337/54cfb111-52d1-4cd7-822f-4d441847bdee)
 
 # Schema
-https://dbdiagram.io/d/3005-FP-656c0a3956d8064ca0445d3c
+![FP v2](https://github.com/ZakaShad/COMP-3005-F23-FP/assets/72482337/4fa4b041-0f11-4a10-853b-17a4649b7441)
+
+(Update to/from)
+[Here's the link to the dbdiagram.io schema](https://dbdiagram.io/d/FP-v2-656d2a9356d8064ca04cef20)
 
 # Documentation
 https://www.overleaf.com/8282345138vzfrpmjxfcpn#479089 
