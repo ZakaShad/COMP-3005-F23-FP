@@ -2,7 +2,15 @@ import express, {Request, Response} from 'express';
 import { Pool } from 'pg';
 import { isNumeric } from './helpers';
 import { PostReqBody, PutReqQuery } from './helpers';
-
+import eventRouter from './routes/event';  
+import exerRouter from './routes/exercise';
+import histroyRouter from './routes/history';  
+import memRouter from './routes/member';  
+import routRouter from './routes/routine';  
+import routSession from './routes/session';  
+import routStaff from './routes/staff'; 
+import routTrain from './routes/trainer';  
+ 
 const application = express();
 const bodyParser = require('body-parser');
 application.use(bodyParser.json());
@@ -17,6 +25,25 @@ const pool = new Pool({
   database: process.env.DB_NAME //A4 for me
 });
 
+application.use('/event',eventRouter); 
+application.use('/exercise',exerRouter); 
+application.use('/history',histroyRouter);
+application.use('/member',memRouter);
+application.use('/routine',routRouter); 
+application.use('/session',routSession); 
+application.use('/staff',routStaff); 
+application.use('/event',routTrain); 
+
+//making the route directories  
+//const events = require ('./routes/events');   
+/*
+const excersie = require ('/routes/excersie.ts');  
+const histroy = require ('src/routes/histroy.ts');  
+const member = require('src/routes/member.ts'); 
+const routine = require('src/routes/session.ts'); 
+const staff = require('src/routes/staff.ts');  
+const trainer = require('src/trainer/staff.ts');  
+*/
 
 
 /*
@@ -144,4 +171,8 @@ application.delete("/student/:student_id", async (req: Request, res: Response) =
 application.listen(PORT, () => {
     console.log(`server running on port ${PORT}...`);
 })
-*/
+*/ 
+application.listen(PORT, () => {
+    console.log(`server running on port ${PORT}...`); 
+
+})
