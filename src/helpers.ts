@@ -1,5 +1,5 @@
 import { String, Record } from 'runtypes';
-import DB from './global-data';
+import DB from './DB';
 
 export const PostReqBody = Record({
     first_name: String,

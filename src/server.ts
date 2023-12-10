@@ -1,7 +1,7 @@
 import express, {Request, Response} from 'express';
 import { userInDb } from './helpers';
 import { PostReqBody, PutReqQuery } from './helpers';
-import DB from './global-data';
+import DB from './DB';
 
 import eventRouter from './routes/event';  
 import exerRouter from './routes/exercise';
