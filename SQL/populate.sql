@@ -55,10 +55,10 @@ VALUES
   (2, 'Evening Routine');
 
 -- Insert data into the Training_Session table
-INSERT INTO Training_Session (training_session_id, training_notes)
+INSERT INTO Training_Session (training_session_id, training_notes,startDate,endDate)
 VALUES
-  (1, 'Focus on form and consistency'),
-  (2, 'Increase intensity gradually');
+  (1, 'Focus on form and consistency','2023-01-02 15:00:00', '2023-01-02 17:00:00'),
+  (2, 'Increase intensity gradually','2023-01-03 10:00:00', '2023-01-03 12:00:00');
 
 -- Insert data into the Trained table
 INSERT INTO Trained (trainer_username, training_session)
