@@ -19,10 +19,14 @@ export const isNumeric = (val: string) : boolean => {
 }
 
 export const userInDb = async(email: string) => {
-    const query = `SELECT email FROM Users WHERE email='${email}' LIMIT 1;`
-    const result = await DB.query(query);
-    if(result.rows.length > 0){
-        return true;
+    try{
+        const query = `SELECT email FROM Users WHERE email='${email}' LIMIT 1;`
+        const result = await DB.query(query);
+        if(result.rows.length > 0){
+            return true;
+        }
+    }catch(err){
+        console.log(err);
     }
     return false;
 }
