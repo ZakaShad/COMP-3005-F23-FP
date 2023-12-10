@@ -8,11 +8,9 @@ const bodyParser = require('body-parser');
 const { auth, requiresAuth } = require('express-openid-connect');
 const path = require('path');
 const validateUser = require('./custom-middleware');
-const PORT = 3000;
+const axios = require("axios").default;
 
-console.log(process.env.DB_USER);
-console.log(process.env.DB_PASS);
-console.log(process.env.DB_NAME);
+const PORT = 3000;
 
 // import DB from './global-data';
 // async function test(){
@@ -22,8 +20,6 @@ console.log(process.env.DB_NAME);
 // }
 
 // test();
-
-//TODO: This needs to be a cloud server
 
 const authConfig = {
     authRequired: false,
@@ -51,8 +47,8 @@ app.get('/member', requiresAuth(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user));
 });
 
-app.get('/register', requiresAuth(), (req, res) => {
-    if(userInDb(req.oidc.isAuthenticated())){
+app.get('/register', requiresAuth(), async(req, res) => {
+    if(await userInDb(req.oidc.user.email)){
         res.send("you're already registered!");
         return;
     }

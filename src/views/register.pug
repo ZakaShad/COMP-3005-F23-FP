@@ -5,6 +5,7 @@ html
     script(src="https://code.jquery.com/jquery-3.6.4.min.js") // Include jQuery
   body
     h1 User Registration Form
+    h4 Welcome to this system! Please register here
 
     form(action="/register", method="post")
       label(for="firstName") First Name:
@@ -32,9 +33,30 @@ html
           }
         });
 
+        $('#userType').change(function() {
+          if ($(this).val() === 'member') {
+            $('#memberQuestions').show();
+          } else {
+            $('#memberQuestions').hide();
+          }
+        });
+
       // Additional Staff ID field (conditionally rendered)
       div#staffIDContainer(style="display: none;")
         label(for="staffID") Staff ID:
         input(type="text", id="staffID", name="staffID")
+
+      div#memberQuestions
+        label(for="height") Height (cm):
+        input(type="number", id="height", name="height")
+
+        label(for="weight") Weight (kg):
+        input(type="number", id="weight", name="weight")
+
+        label(for="RHR") Resting Heart Rate (RHR):
+        input(type="number", id="RHR", name="RHR")
+
+        label(for="MHR") Max Heart Rate (MHR):
+        input(type="number", id="MHR", name="MHR")
 
       input(type="submit", value="Submit")
