@@ -11,11 +11,11 @@ import routRouter from './routes/routine';
 import routSession from './routes/session';  
 import routStaff from './routes/staff'; 
 import routTrain from './routes/trainer';  
+const app = express();
 const bodyParser = require('body-parser');
 const { auth, requiresAuth } = require('express-openid-connect');
 const path = require('path');
 const validateUser = require('./custom-middleware');
-const axios = require("axios").default;
 
 const PORT = 3000;
 
