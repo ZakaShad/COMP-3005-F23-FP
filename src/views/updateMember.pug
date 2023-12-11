@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title Edit Profile 
+  body
+    h1 Edit Profile
+
+    
+    form(action="/member/edit", method="POST")
+        label(for="firstName") First Name:
+        input(type="text", id="firstName", name="firstName", required) 
+
+        label(for="lastName") Last Name:
+        input(type="text", id="lastName", name="lastName", required)
+
+        label(for="dob") Date of Birth:
+        input(type="date", id="dob", name="dob", required)
+
+        #memberQuestions
+            label(for="height") Height (cm):
+            input(type="number", id="height", name="height", required)
+
+            label(for="weight") Weight (kg):
+            input(type="number", id="weight", name="weight", required)
+
+            label(for="RHR") Resting Heart Rate (RHR):
+            input(type="number", id="RHR", name="RHR", required)
+
+            label(for="MHR") Max Heart Rate (MHR):
+            input(type="number", id="MHR", name="MHR", required)
+
+            label(for="desiredWeight") Desired Weight (kg):
+            input(type="number", id="desiredWeight", name="desiredWeight", required)
+
+        input(id="submit", type="submit", value="Submit")

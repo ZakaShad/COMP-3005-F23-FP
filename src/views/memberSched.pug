@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title User Schedule
+  body
+    h1 #{email} Schedule
+
+    h1 Events
+    ul
+        each event in events
+            li #{event.title} - From #{event.begins_at} till #{event.ends_at}
+
+    h1 Sessions 
+    ul 
+        each session in sessions 
+            li Session with #{session.trainer} - From #{session.begins_at} till #{session.ends_at}

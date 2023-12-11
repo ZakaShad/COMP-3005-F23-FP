@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    title Goal PRs
+  body
+    h1 Goal PRs
+
+    ul
+        each workout in pr_data
+            li #{workout.reps} reps at #{workout.weight} lbs for #{workout.workout_name}
