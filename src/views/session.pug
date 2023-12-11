@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title Member Schedule Traning Session
+    //- script(src="https://code.jquery.com/jquery-3.6.4.min.js") // Include jQuery
+  body
+    h1 #{username}
+    h4 Welcome to this system! Please register here
+
+    - newRoute = `/session/${username}`
+    form(action= newRoute, method="post")
+
+        label(for="startDate") startDate:
+        input(type="date", id="startDate", name="startDate", required)
+
+        label(for="timeInput") Enter a Time:
+        input(type="time" id="timeIn" name="timeIn")  
+
+        label(for="endDate") EndDate:
+        input(type="date", id="endDate", name="endDate", required)
+
+        label(for="timeOut") Enter a Time:
+        input(type="time" id="timeOut" name="timeOut")  
+
+        input(id="submit", type="submit", value="Submit")
+
+

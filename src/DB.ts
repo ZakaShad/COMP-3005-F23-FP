@@ -13,7 +13,7 @@ const DB = new Pool({
     user: 'postgres', //postgres 
     password: String(fs.readFileSync('myPass.txt')),
     host: 'localhost',
-    port: 5432, // default Postgres port
+    port: 5433, // default Postgres port
     database: 'FP' //FP 
 });
 

@@ -3,13 +3,50 @@ const routerSess = express.Router();
 import DB from '../DB'; 
 
  
-routerSess.get("/", async(Request,Response) => {  
+routerSess.get("/:username", async(Request,Response) => {  
 
-    const query = "SELECT * From Training_Session";
-    const result = await DB.query(query);
+    const user = Request.params.username; 
+
+    const data = { 
+
+        username: String(user), 
+        test: 'test101'
+    };
+    console.log(user);
+    Response.render('session.pug',data) 
+});   
+
+routerSess.get("/:username/cancel", async(Request,Response) => { 
+    
+    const user = Request.params.username;  
+    const data = { 
+
+        username: String(user), 
+        test: 'test101'
+    }; 
+    Response.render('cancelSession.pug',data);
+
+});
+
+
+routerSess.post("/:username", async(Request,Response) => {   
+
+    console.log(Request.body); 
+    console.log(Request.params.username);  
+
+    const start = Request.body.startDate + ' ' + Request.body.timeIn + ':00'; 
+    const end  = Request.body.endDate + ' ' + Request.body.timeOut + ':00';  
+    const idv = Number(3);
+
+    
+    const query = `INSERT INTO Training_Session VALUES
+    (3,' ', '${start}', '${end}');`; 
+    console.log(query) 
+    const result = await DB.query(query); 
     const data = result.rows;
 
-    Response.send(data); 
+    console.log("YEAAAA MONNNN");
+    Response.send("data"); 
 });  
 
 routerSess.post("/member", async(Request,Response) => {   
@@ -41,7 +78,7 @@ routerSess.delete("/member", async (Request,Response) => {
 
 }); 
 
-
+routerSess.delete("/")
 routerSess.put("/:id", async(Request,Response) => {   
 
     const id = Request.body.training_session_id; 
