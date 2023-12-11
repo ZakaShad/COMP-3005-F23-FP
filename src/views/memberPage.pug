@@ -14,8 +14,8 @@ html
       li Desired Weight: #{desired_weight}
       li Membership Level: #{membership_level}
       li Loyalty Points: #{loyalty_points}
-    a(href='/') View Schedule <br/>
-    button(type="button", onclick=`window.location.href = '/session/${username}'`) Schedule Training Session 
+    a(href=`/`) View Schedule (Events and Training Sessions) <br/>
+    //- a(href=`/session/${username}`) Schedule Training Session 
 
     h3 Routines
     ul
@@ -23,9 +23,10 @@ html
             li #{routine}
 
     h3 Workouts
-    a(href=`/member/${username}/goal`) PRs <br />
-    a(href='/member/goal') All Workouts <br />
-
+    a(href=`/member/${username}/goal`) Goal PRs <br />
+    a(href=`/member/${username}/goal`) Achieved PRs <br />
+    a(href=`/member/${username}/goal`) All PRs <br />
+x 
     #edit
       h3 Edit Profile
       button(type="button", onclick="window.location.href = '/whee'") Edit Health Metrics 
