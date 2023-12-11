@@ -14,7 +14,7 @@ const DB = new Pool({
     password: String(fs.readFileSync('myPass.txt')),
     host: 'localhost',
     port: 5432, // default Postgres port
-    database: 'FP' //FP 
+    database: 'FP v2' //FP 
 });
 
 export default DB;

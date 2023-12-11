@@ -50,11 +50,11 @@ app.use('/train',routTrain);
 
 app.get('/', async (req, res) => {
     const email = req.oidc.user.email;
-    const query = `SELECT u_type FROM Users WHERE username = '${email}'`
+    const query = `SELECT type FROM Users WHERE email = '${email}'`
     
     try{
         const result = await DB.query(query);
-        const userType = result.rows[0].u_type;
+        const userType = result.rows[0].type;
         res.redirect(`/${userType}/${email}`);
     }catch(err){
         console.log(err);
@@ -74,7 +74,6 @@ app.get('/register', requiresAuth(), async(req, res) => {
 
 app.post('/register', async(req, res) => {
     const username = req.oidc.user.email;
-    const passwd = '...';
     const email = req.oidc.user.email;
     const fname = req.body.firstName;
     const lname = req.body.lastName;
@@ -82,8 +81,8 @@ app.post('/register', async(req, res) => {
     const userType = req.body.userType;
     
     const usersQuery = `
-    INSERT INTO Users
-    VALUES ('${username}', '${passwd}', '${email}', '${dob}', '${fname}', '${lname}', '${dob}', '${userType}' );
+    INSERT INTO Users (email, first_name, last_name, registration_date, birthday, type)
+    VALUES ('${email}', '${fname}', '${lname}', '${dob}', '${dob}', '${userType}' );
     `
 
     var subQuery;
@@ -91,8 +90,8 @@ app.post('/register', async(req, res) => {
         const {height, weight, RHR, MHR, desiredWeight} = req.body;
 
         subQuery = `
-        INSERT INTO Member
-        VALUES ('${username}', ${height}, ${weight}, ${RHR}, ${MHR}, ${desiredWeight}, 'Bronze', 10);
+        INSERT INTO Member (email, membership_level, loyalty_points, desired_weight, height, weight, rhr, mhr)
+        VALUES ('${email}', 'Bronze', 10, ${desiredWeight}, ${height}, ${weight}, ${RHR}, ${MHR});
         `
     }
 

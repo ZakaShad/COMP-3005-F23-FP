@@ -3,7 +3,7 @@ html
   head
     title User Profile
   body
-    h1 #{username}
+    h1 #{email}
 
     h3 Profile
     ul
@@ -23,9 +23,9 @@ html
             li #{routine}
 
     h3 Workouts
-    a(href=`/member/${username}/goal`) Goal PRs <br />
-    a(href=`/member/${username}/goal`) Achieved PRs <br />
-    a(href=`/member/${username}/goal`) All PRs <br />
+    a(href=`/member/${email}/goal`) Goal PRs <br />
+    a(href=`/member/${email}/goal`) Achieved PRs <br />
+    a(href=`/member/${email}/goal`) All PRs <br />
 x 
     #edit
       h3 Edit Profile

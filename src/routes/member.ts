@@ -4,15 +4,14 @@ import DB from '../DB';
 const routerMem = express.Router();
 
 routerMem.get("/:username", async (req,res) => { 
-    const memberQuery = `SELECT * FROM Member WHERE username = '${req.params.username}' `
+    const memberQuery = `SELECT * FROM Member WHERE email = '${req.params.username}' `
     // const PRsQuery = `SELECT workout_name, weight, reps FROM goal_pr WHERE member_username='${req.params.username}' `
     
     const routineQuery = `
-    SELECT name FROM member_workout_routines NATURAL JOIN workout_routine
-    WHERE member_username='${req.params.username}';
+    SELECT name FROM member_workout_routine NATURAL JOIN workout_routine
+    WHERE member='${req.params.username}';
     `
 
-    const scheduleQuery = `...` //TODO: Implement
     try{
         const result = await DB.query(memberQuery);
         const memberData = result.rows[0];
@@ -28,14 +27,18 @@ routerMem.get("/:username", async (req,res) => {
 });
 
 routerMem.get("/:username/goal", async (req,res) => { 
-    const query = `
-    SELECT workout_name, weight, reps FROM goal_pr WHERE member_username='${req.params.username}'; 
-    `
-    const result = await DB.query(query);
-    const pr_data = result.rows;
-    // pr_data['workoutData'] = result;
-    res.render('memberPrs', {pr_data});
-    // res.send(pr_data);
+    try{
+        const query = `
+        SELECT workout, weight, reps FROM goal_prs WHERE member='${req.params.username}'; 
+        `
+        const result = await DB.query(query);
+        const pr_data = result.rows;
+        res.render('memberPrs', {pr_data});
+    }catch(err){
+        console.log(err);
+        res.send("Internal server error");
+    }
+
 });
 
 
