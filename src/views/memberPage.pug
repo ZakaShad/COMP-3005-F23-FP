@@ -14,7 +14,7 @@ html
       li Desired Weight: #{desired_weight}
       li Membership Level: #{membership_level}
       li Loyalty Points: #{loyalty_points}
-    a(href=`/`) View Schedule (Events and Training Sessions) <br/>
+    a(href=`/member/${email}/schedule`) View Schedule (Events and Training Sessions) <br/>
     //- a(href=`/session/${username}`) Schedule Training Session 
 
     h3 Routines
@@ -29,8 +29,8 @@ html
 x 
     #edit
       h3 Edit Profile
-      button(type="button", onclick="window.location.href = '/whee'") Edit Health Metrics 
-      button(type="button", onclick="window.location.href = '/whee'") Edit Routines
-      button(type="button", onclick="window.location.href = '/whee'") Edit Workouts Performed
-      button(type="button", onclick="window.location.href = '/whee'") Edit PRs
+      button(type="button", onclick=`window.location.href = '/member/${email}/editProfile'`) Edit Profile
+      button(type="button", onclick="window.location.href = '/'") Edit Routines
+      button(type="button", onclick="window.location.href = '/'") Edit Workouts Performed
+      button(type="button", onclick="window.location.href = '/'") Edit PRs
     //- button(type="button", onclick="window.location.href = '/whee'") Schedule Training Session 
