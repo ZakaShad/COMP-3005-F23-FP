@@ -60,7 +60,6 @@ routerMem.get("/:username/editProfile", async (req,res) => {
 
 // This is really bad design as post should be used for adding to DB
 routerMem.post("/edit", async(req, res) => {
-    console.log("ASDFASDFASDF");
     const email = req.oidc.user.email;
     const fname = req.body.firstName;
     const lname = req.body.lastName;
@@ -68,26 +67,26 @@ routerMem.post("/edit", async(req, res) => {
     const {height, weight, RHR, MHR, desiredWeight} = req.body;
     
     const usersQuery = `
-    UPDATE User
+    UPDATE Users
     SET first_name='${fname}', last_name='${lname}', birthday='${dob}'
-    INSERT INTO Users (email, first_name, last_name, registration_date, birthday, type);
+    WHERE email='${email}';
     `
 
     const subQuery = `
     UPDATE Member 
-    SET desired_weight=${desiredWeight}, height=${height}, weight=${weight}, rhr=${RHR}, mh=${MHR}
+    SET desired_weight=${desiredWeight}, height=${height}, weight=${weight}, rhr=${RHR}, mhr=${MHR}
     WHERE email='${email}';
     `
 
     try{
         const query = usersQuery + subQuery;
         await DB.query(query);
+        res.redirect("/");
     } catch(err){
         console.log(err);
         res.send("Internal server error");
     }
 
-    res.redirect("/");
 });
 
 routerMem.get("/:email/schedule", async(req, res) => {
