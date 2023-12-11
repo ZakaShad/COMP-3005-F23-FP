@@ -47,6 +47,7 @@ app.use('/session',routSession);
 app.use('/staff',routStaff); 
 app.use('/train',routTrain); 
 
+
 app.get('/', async (req, res) => {
     const email = req.oidc.user.email;
     const query = `SELECT u_type FROM Users WHERE username = '${email}'`
@@ -60,10 +61,6 @@ app.get('/', async (req, res) => {
         res.send("internal server error");
         return;
     }
-    
-    // console.log(`/${userType}/${email}`);
-    // res.send(`/${userType}/${email}`);
-    // res.send('nice');
 });
 
 
