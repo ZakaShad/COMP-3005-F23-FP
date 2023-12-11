@@ -25,7 +25,18 @@ routerMem.get("/:username", async (req,res) => {
         console.log(err);
         res.send("internal server error");
     }
-    
 });
+
+routerMem.get("/:username/goal", async (req,res) => { 
+    const query = `
+    SELECT workout_name, weight, reps FROM goal_pr WHERE member_username='${req.params.username}'; 
+    `
+    const result = await DB.query(query);
+    const pr_data = result.rows;
+    // pr_data['workoutData'] = result;
+    res.render('memberPrs', {pr_data});
+    // res.send(pr_data);
+});
+
 
 export default routerMem;
